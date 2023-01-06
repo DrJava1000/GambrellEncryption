@@ -218,10 +218,10 @@ public class JavaEncryption extends JFrame {
    
    if(encrypt == false)
    {
-	TextFileFilter.setFileExtension("txt.cne_"); // sets file filter to check for encoded text files if there is to be decryption 
+	TextFileFilter.setFileExtensionFilter("enctxt"); // sets file filter to check for encoded text files if there is to be decryption 
    }else 
    {
-	TextFileFilter.setFileExtension("txt."); // sets file filter to check for normal text files for encryption 
+	TextFileFilter.setFileExtensionFilter("txt"); // sets file filter to check for normal text files for encryption 
    }
    
    int selectionResult = fileChooser.showOpenDialog(this); // opens dialog for choosing a file in file explorer 
@@ -258,9 +258,9 @@ public class JavaEncryption extends JFrame {
 	  }
     }
    
-   if(encrypt == true) // if encrypt parameter holds boolean value of true, file is encrypted and a new file with _enc.txt ending is created 
+   if(encrypt == true) // if encrypt parameter holds boolean value of true, file is encrypted and a new file with .enctxt ending is created 
    {
-	File cipherFile = main.prepareFileWrite(selection, ".txt", "_enc.txt");
+	File cipherFile = main.prepareFileWrite(selection, ".txt", ".enctxt");
 	
 	if(encType == 1)
 	{
@@ -274,7 +274,7 @@ public class JavaEncryption extends JFrame {
    }
    else // if encrypt parameter holds boolean value of false, file is decrypted and a new file with _dec.txt ending is created 
    {
-	File plainFile = main.prepareFileWrite(selection, "_enc.txt", "_dec.txt");
+	File plainFile = main.prepareFileWrite(selection, ".enctxt", "_dec.txt");
     
     if(encType == 1)
 	{

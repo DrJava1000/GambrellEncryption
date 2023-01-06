@@ -1,63 +1,43 @@
 package encryption; 
 
 import java.io.File; 
+import org.apache.commons.io.FilenameUtils; 
 
 public class TextFileFilter extends javax.swing.filechooser.FileFilter {
- private static String fileExtensionReversed = "txt."; 
+ private static String fileExtensionFilter = "txt"; 
 	
- public boolean accept(File f)
- {
-  String fileName = f.getName(); 
-  String extensionTest = ""; 
-	  
-  int currentIndex = fileName.length() - 1; 
-  int iterationCount = 0; 
+ public boolean accept(File file){
+	 
+	 String fileExtension = "";
+	 
+	 try {
+		 fileExtension = FilenameUtils.getExtension(file.getName());
+	 }catch(IllegalArgumentException alternateStreamError){
+		 return false; 
+	 }
   
-  if(fileExtensionReversed.equals("txt."))
-  {
-   while(iterationCount < 4) // Loop reads back last 4 characters of file name String and a new String holds the result 
-   {
-	extensionTest = extensionTest + fileName.charAt(currentIndex); 
-	currentIndex--; 
-	iterationCount++; 
-   }
-  }
-  else
-  {
-   while(iterationCount < 8) // Loop reads back last 8 characters of file name String and a new String holds the result 
-   {
-    extensionTest = extensionTest + fileName.charAt(currentIndex); 
-	currentIndex--; 
-	iterationCount++; 
-   }  
-  }
-	  
-  if(extensionTest.equals(fileExtensionReversed)) // compares the result String to the file extension backward to determine if the file can be shown  
-  {
-   return true; // is a file with the extension  
-  }else
-   {
-	return false; // isn't a file with the extension  
-   }	 
+	 // Check to see if files match filter
+	 if(fileExtension.equals(fileExtensionFilter)){
+		 return true; // is a file with the extension  
+	 }else{
+		 return false; // isn't a file with the extension  
+  	 }	 
  }
  
  public String getDescription()
  {
-  if(fileExtensionReversed.equals("txt.")) // if text file 
-  {
-   return "Text Files (.txt)"; 
+  if(fileExtensionFilter.equals("txt")){
+	  return "Plain Text Files (.txt)"; 
   }
-  if(fileExtensionReversed.equals("txt.cne_")) // if encoded text file 
-  {
-   return  "Encoded Text Files (_enc.txt)"; 
-  }else
-  {
-   return "";   
+  if(fileExtensionFilter.equals("enctxt")){
+	  return  "Encoded Text Files (.enctxt)"; 
+  }else{
+	  return "";   
   }
  }
  
- public static void setFileExtension(String extension) // sets reverse file extension that is used for selecting files to view 
+ public static void setFileExtensionFilter(String extensionFilter) // sets reverse file extension that is used for selecting files to view 
  {
-  fileExtensionReversed = extension; 
+  fileExtensionFilter = extensionFilter; 
  }
 }
